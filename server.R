@@ -13,12 +13,11 @@ pool <- dbPool(drv = RSQLite::SQLite())
 onStop(function() {
   poolClose(pool)
 })
-
+#Create table user in DB
 dbExecute(pool, 'CREATE TABLE user (user_name TEXT, country TEXT, email TEXT, password TEXT)')
 
-
 #Countries
-countries.list <- read.table("countries.txt", header = FALSE, sep = "|",
+countries.list <- read.table("www/countries.txt", header = FALSE, sep = "|",
                              stringsAsFactors = FALSE, quote = "",
                              col.names = c("abbr", "country"))
 choice.country <- as.list(as.character(countries.list$country))
