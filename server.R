@@ -7,14 +7,15 @@ library(mailR)   #For sending an email from R
 library(DBI)
 library(pool)
 library(RSQLite)
-#DataBase
-pool <- dbPool(drv = RSQLite::SQLite())
+#Database
+sqlite_path = "www/sqlite/users"
+pool <- dbPool(drv = RSQLite::SQLite(), dbname=sqlite_path)
 
 onStop(function() {
   poolClose(pool)
 })
 #Create table user in DB
-dbExecute(pool, 'CREATE TABLE user (user_name TEXT, country TEXT, email TEXT, password TEXT)')
+dbExecute(pool, 'CREATE TABLE IF NOT EXISTS user (user_name TEXT, country TEXT, email TEXT, password TEXT)')
 
 #Countries
 countries.list <- read.table("www/countries.txt", header = FALSE, sep = "|",
